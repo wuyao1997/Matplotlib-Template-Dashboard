@@ -8,7 +8,7 @@
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 </p>
 
-这是一个用于管理 [Matplotlib](https://matplotlib.org) 模板的项目。
+这是一个用于管理 [Matplotlib](https://matplotlib.org) 模板的项目，可以在这个 **[Cloudflare Pages](https://matplotlib-template-dashboard.pages.dev/)** 使用。
 
 [Matplotlib](https://matplotlib.org)是一个非常受欢迎的 Python 绘图库，它提供了丰富的绘图功能，并且易于使用。使用模板可以快速地生成高质量的图表，并且可以轻松地进行定制。然而一直以来都缺乏一个方便的模板管理工具，因此本项目应运而生。
 
