@@ -12,7 +12,6 @@ Embed the resource files referenced in HTML in base64 encoding format, including
 3. 引用的 notebook 文件
 4. 网页favicon
 5. footer中的img元素
-
 """
 
 import os
@@ -56,9 +55,7 @@ def embedding_resource(html_file: str, out_html_file: str):
     logger.info("Embedding ascii files...")
     for button in soup.find_all("button"):
         if button.get("data-text"):
-            file_path = os.path.join(
-                os.path.dirname(html_file), button["data-text"]
-            )
+            file_path = os.path.join(os.path.dirname(html_file), button["data-text"])
 
             logger.debug(f"Embedding {file_path} into html ...")
 
@@ -71,13 +68,13 @@ def embedding_resource(html_file: str, out_html_file: str):
 
 
 if __name__ == "__main__":
-    from config import tasks
+    from config import params
 
-    for task in tasks:
-        logger.info(f"Run build task ****** {task['info']}")
+    for param in params:
+        logger.info(f"Run build task ****** {param['info']}")
 
-        html_dir = os.path.join(task["project_dir"], task["build_dir"], "html")
-        outfilename = f"{html_dir}/{task["outfilename"]}.html"
+        html_dir = param["html_dir"]
+        outfilename = f"{html_dir}/{param['outfilename']}.html"
 
         embedding_resource(f"{html_dir}/index.html", outfilename)
         logger.info(f"{outfilename} has been generated.\n")

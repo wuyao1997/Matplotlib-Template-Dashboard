@@ -5,11 +5,12 @@ Configuring build parameters
 """
 
 import logging
+from os.path import abspath, join
 
 
 zh_CN = dict(
     info="中文构建",
-    lang="zh-CN",
+    lang="zh_CN",
     project_dir="..",
     notebook_dir="notebook",
     style_dir="style",
@@ -31,7 +32,38 @@ zh_CN = dict(
     ],
 )
 
-tasks = [zh_CN]
+
+def get_task_params(tasks):
+    """Get task parameters
+
+    获取任务参数
+    """
+    task_params = []
+    for task in tasks:
+        param = task.copy()
+
+        param["project_dir"] = abspath(param["project_dir"])
+        param["notebook_dir"] = join(param["project_dir"], param["notebook_dir"])
+        param["style_dir"] = join(param["project_dir"], param["style_dir"])
+        param["build_dir"] = join(param["project_dir"], param["build_dir"])
+        param["image_dir"] = join(
+            param["build_dir"], f"{param['image_format']}-{param['image_dpi']}"
+        )
+        param["html_dir"] = join(param["build_dir"], "html")
+        param["py_dir"] = join(param["build_dir"], "python_scripts")
+
+        lang_path = join(param["project_dir"], "resources", param["lang"])
+        param["header_path"] = join(lang_path, "html", "header.html")
+        param["footer_path"] = join(lang_path, "html", "footer.html")
+        param["css_path"] = join(lang_path, "css", "style.css")
+        param["js_path"] = join(lang_path, "js", "script.js")
+
+        task_params.append(param)
+
+    return task_params
+
+
+params = get_task_params([zh_CN])
 
 
 def get_logger():

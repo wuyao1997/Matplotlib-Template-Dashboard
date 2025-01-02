@@ -1,0 +1,97 @@
+body {
+    background-color: #1e1e1e;
+}
+
+h2 {
+    text-align: center;
+    width: 100vw;
+    margin: 0;
+    background-color: #0e639c;
+    color: white;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.box {
+    width: 240px;
+    height: 220px;
+    margin: 10px;
+    margin-top: 20px;
+    text-align: center;
+    background-color: #929292;
+    position: relative;
+}
+
+.box img {
+    width: auto;
+    height: 88%;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+button {
+    border: none;
+    margin-bottom: 0px;
+    width: 100%;
+    text-align: center;
+    outline: 1px solid transparent;
+    outline-offset: 2px !important;
+    color: white;
+    background: #0e639c;
+    font-size: 16px;
+}
+
+button:hover {
+    cursor: pointer;
+    background: #1a8dda;
+}
+
+.copy-button {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 40%;
+    height: auto;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+}
+
+.footer-content,
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.footer-content {
+    margin-left: 20px;
+}
+
+.social-icons,
+.footer-bottom p {
+    margin: 0;
+}
+
+.social-icons a {
+    margin-right: 15px;
+}
+
+.social-icons img {
+    width: 24px;
+    height: 24px;
+}
+
+.footer-bottom {
+    border-top: 1px solid #444;
+    padding-top: 10px;
+    margin-left: auto;
+}

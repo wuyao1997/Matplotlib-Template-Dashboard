@@ -76,13 +76,12 @@ def get_code_from_notebook(notebook_path: str) -> None:
 
 
 if __name__ == "__main__":
-    from config import tasks
+    from config import params
 
-    for task in tasks:
-        logger.info(f"Run build task ****** {task['info']}")
+    for param in params:
+        logger.info(f"Run build task ****** {param['info']}")
 
-        NB_DIR = os.path.join(task["project_dir"], task["notebook_dir"])
-        notebook_list = get_notebook_in_dir(NB_DIR)
+        notebook_list = get_notebook_in_dir(param["notebook_dir"])
 
         i = 0
         for notebook in notebook_list:

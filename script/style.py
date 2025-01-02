@@ -14,18 +14,20 @@ logger = get_logger()
 
 
 def get_style_in_dir(style_dir: str) -> list:
-    """Get the matplotlibrc file in the subdirectory
+    """Get all the filenames in the specified directory that end with mplstyle
 
-    如果子目录中包含 matplotlibrc 文件，则返回matplotlibrc路径
+    获取指定目录下所有以 mplstyle 结尾的文件名，不递归查找
     """
     lst = []
-    for root, _, files in os.walk(style_dir):
-        if "matplotlibrc" in files:
-            lst.append(os.path.join(root, "matplotlibrc"))
+    for file in os.listdir(style_dir):
+        if file.endswith("mplstyle"):
+            filename = os.path.splitext(file)[0]
+            lst.append(filename)
 
     return lst
 
 
+# pylint: disable=redefined-outer-name
 def gen_mplstyle_figure(rcfile, savefilename):
     """build a figure using the given matplotlibrc file
 
@@ -48,66 +50,57 @@ def gen_mplstyle_figure(rcfile, savefilename):
     plt.close()
 
 
-def generate_stylebox(filename, image_format):
+# pylint: disable=redefined-outer-name
+def generate_stylebox(style_name, rcfile_path, image_path):
     """Generate the HTML code for the style box
 
     生成样式盒子的HTML代码
     """
-    matplotlibrc = f"../../style/{filename}/matplotlibrc"
-    img_src = f"../{image_format}/mplstyle/{filename}.{image_format}"
-    logger.debug(f"Generating div of {filename}...")
-
     box_html = f"""
         <div class="box">
-            <button id="{filename}" class="mplrc-button"
-            data-text="{matplotlibrc}">{filename}</button>
-            <img src="{img_src}"
-            alt="{filename}">
-            <button class="copy-button" data-text="{matplotlibrc}" >Copy</button>
+            <button id="{style_name}" class="mplrc-button"
+            data-text="{rcfile_path}">{style_name}</button>
+            <img src="{image_path}"
+            alt="{style_name}">
+            <button class="copy-button" data-text="{rcfile_path}" >Copy</button>
         </div>
     """
     return box_html
 
 
 if __name__ == "__main__":
-    from config import tasks
+    from config import params
 
-    for task in tasks:
-        logger.info(f"Run build task ****** {task['info']}")
+    for param in params:
+        logger.info(f"Run build task ****** {param['info']}")
 
-        STYLE_DIR = os.path.join(task["project_dir"], task["style_dir"])
-        style_list = get_style_in_dir(STYLE_DIR)
+        style_names = get_style_in_dir(param["style_dir"])
 
-        fig_names = []
-        for style in style_list:
-            style_name = os.path.basename(os.path.dirname(style))
-            fig_name = f"{style_name}.{task["image_format"]}"
-            save_dir = os.path.join(
-                task["project_dir"], task["build_dir"], task["image_format"], "mplstyle"
-            )
-            fig_names.append(f"{save_dir}/{fig_name}")
+        IMG_DIR = os.path.join(param["image_dir"], "mplstyle")
+        IMG_FMT = param["image_format"]
+        if not os.path.exists(IMG_DIR):
+            os.makedirs(IMG_DIR)
+
+        h2_title = os.path.basename(param["style_dir"])
+        html_content = f"<h2>{h2_title}</h2>"
 
         i = 0
-        html_content = f"<h2>{task['style_dir']}</h2>"
-        for style, fig_name in zip(style_list, fig_names):
-            if not os.path.exists(os.path.dirname(fig_name)):
-                os.makedirs(os.path.dirname(fig_name))
+        for style_name in style_names:
+            logger.debug(f"Build figure {style_name}")
 
-            logger.debug(f"Build figure {fig_name}")
-            gen_mplstyle_figure(style, fig_name)
+            rcfile_path = os.path.join(param["style_dir"], style_name + ".mplstyle")
+            fig_path = os.path.join(IMG_DIR, f"{style_name}.{IMG_FMT}")
 
-            # 获取style的最后一个文件夹名，不是文件名
-            style_name = os.path.basename(os.path.dirname(style))
-            html_content += generate_stylebox(style_name, task["image_format"])
+            gen_mplstyle_figure(rcfile_path, fig_path)
+
+            html_content += generate_stylebox(style_name, rcfile_path, fig_path)
             i += 1
 
-        outdir = os.path.join(
-            task["project_dir"], task["build_dir"], "html", "mplstyle.html"
-        )
-        if not os.path.exists(outdir):
-            os.makedirs(outdir)
+        if not os.path.exists(param["html_dir"]):
+            os.makedirs(param["html_dir"])
 
-        with open(outdir, "w", encoding="utf-8") as f:
+        outfilename = os.path.join(param["html_dir"], "mplstyle.html")
+        with open(outfilename, "w", encoding="utf-8") as f:
             f.write(html_content)
 
         logger.info(f"{i} matplotlibrc files have been build finished.")
