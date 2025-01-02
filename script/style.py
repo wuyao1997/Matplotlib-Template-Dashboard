@@ -31,7 +31,7 @@ def gen_mplstyle_figure(rcfile, savefilename):
 
     用给定的 matplotlibrc 文件生成一张图
     """
-    plt.style.use('default')
+    plt.style.use("default")
     plt.style.use(rcfile)
 
     fig, ax = plt.subplots(constrained_layout=True)
@@ -48,6 +48,27 @@ def gen_mplstyle_figure(rcfile, savefilename):
     plt.close()
 
 
+def generate_stylebox(filename, image_format):
+    """Generate the HTML code for the style box
+
+    生成样式盒子的HTML代码
+    """
+    matplotlibrc = f"../../style/{filename}/matplotlibrc"
+    img_src = f"../{image_format}/mplstyle/{filename}.{image_format}"
+    logger.debug(f"Generating div of {filename}...")
+
+    box_html = f"""
+        <div class="box">
+            <button id="{filename}" class="mplrc-button"
+            data-text="{matplotlibrc}">{filename}</button>
+            <img src="{img_src}"
+            alt="{filename}">
+            <button class="copy-button" data-text="{matplotlibrc}" >Copy</button>
+        </div>
+    """
+    return box_html
+
+
 if __name__ == "__main__":
     from config import tasks
 
@@ -57,8 +78,6 @@ if __name__ == "__main__":
         STYLE_DIR = os.path.join(task["project_dir"], task["style_dir"])
         style_list = get_style_in_dir(STYLE_DIR)
 
-        # 使用style_list内容，生成保存文件的路径列表
-        # 保存文件名字和style_list最后一级目录名相同
         fig_names = []
         for style in style_list:
             style_name = os.path.basename(os.path.dirname(style))
@@ -69,12 +88,26 @@ if __name__ == "__main__":
             fig_names.append(f"{save_dir}/{fig_name}")
 
         i = 0
+        html_content = f"<h2>{task['style_dir']}</h2>"
         for style, fig_name in zip(style_list, fig_names):
             if not os.path.exists(os.path.dirname(fig_name)):
                 os.makedirs(os.path.dirname(fig_name))
 
             logger.debug(f"Build figure {fig_name}")
             gen_mplstyle_figure(style, fig_name)
+
+            # 获取style的最后一个文件夹名，不是文件名
+            style_name = os.path.basename(os.path.dirname(style))
+            html_content += generate_stylebox(style_name, task["image_format"])
             i += 1
+
+        outdir = os.path.join(
+            task["project_dir"], task["build_dir"], "html", "mplstyle.html"
+        )
+        if not os.path.exists(outdir):
+            os.makedirs(outdir)
+
+        with open(outdir, "w", encoding="utf-8") as f:
+            f.write(html_content)
 
         logger.info(f"{i} matplotlibrc files have been build finished.")

@@ -28,7 +28,7 @@ STYLE = """<style>
     .container {
         display: flex;
         flex-wrap: wrap;
-        justify-content: left;
+        justify-content: center;
     }
 
     .box {
@@ -152,13 +152,13 @@ FOOTER = """\n
 
 JS = """\n
 <script>
-    const buttons = document.querySelectorAll('button[data-pycode]');
+    const copyButtons = document.querySelectorAll('.copy-button');
     let lastClickedCopyButton = null;
 
-    buttons.forEach(button => {
+    copyButtons.forEach(button => {
         button.addEventListener('click', function () {
-            const pycode = this.getAttribute('data-pycode');
-            navigator.clipboard.writeText(pycode)
+            const text = this.getAttribute('data-text');
+            navigator.clipboard.writeText(text)
                 .then(() => {
                     //alert("拷贝成功");
                     this.textContent = "Copied!";
@@ -183,7 +183,7 @@ JS = """\n
             const fileName = prompt('下载 notebook 脚本为文件（不含后缀名）：', defaultFileName);
 
             if (fileName) {
-                const fileContent = this.getAttribute('data-notebook');
+                const fileContent = this.getAttribute('data-text');
                 const blob = new Blob([fileContent], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
 
@@ -194,6 +194,24 @@ JS = """\n
 
                 URL.revokeObjectURL(url);
             }
+        });
+    });
+
+    const mplrcButtons = document.querySelectorAll('.mplrc-button');
+    mplrcButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const style_name = this.textContent;
+
+            const fileContent = this.getAttribute('data-text');
+            const blob = new Blob([fileContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${style_name}.matplotlibrc`;
+            a.click();
+
+            URL.revokeObjectURL(url);
         });
     });
 </script>
@@ -213,17 +231,17 @@ def generate_templatebox(directory, filename, image_format, pyfile):
     box_html = f"""
         <div class="box">
             <button id="{filename}" class="notebook-button"
-            data-notebook="{notebook_src}">{filename}</button>
+            data-text="{notebook_src}">{filename}</button>
             <img src="{img_src}"
             alt="{filename}">
-            <button class="copy-button" data-pycode="{pyfile}" >Copy</button>
+            <button class="copy-button" data-text="{pyfile}" >Copy</button>
         </div>
     """
     return box_html
 
 
 # pylint: disable=dangerous-default-value
-def generate_html(directory, image_format="png", h2_order=[]):
+def generate_html(directory, outdir, image_format="png", h2_order=[]):
     """Generate an HTML page
 
     生成HTML页面
@@ -266,8 +284,14 @@ def generate_html(directory, image_format="png", h2_order=[]):
                     )
                     html_content += templatebox
 
+    # load mplstyle.html to insert
+    with open(f"{outdir}/mplstyle.html", "r", encoding="utf-8") as file:
+        html_content += file.read()
+
     html_content += f"\n</div>\n{FOOTER}\n{JS}</body></html>"
-    return html_content
+
+    with open(f"{outdir}/index.html", "w", encoding="utf-8") as f:
+        f.write(html_content)
 
 
 if __name__ == "__main__":
@@ -281,12 +305,6 @@ if __name__ == "__main__":
         IMG_FMT = task["image_format"]
         html_dir = os.path.join(task["project_dir"], task["build_dir"], "html")
 
-        html_page = generate_html(NB_DIR, image_format=IMG_FMT, h2_order=sub_dir)
-
-        if not os.path.exists(html_dir):
-            os.makedirs(html_dir)
-
-        with open(f"{html_dir}/index.html", "w", encoding="utf-8") as f:
-            f.write(html_page)
+        generate_html(NB_DIR, html_dir, image_format=IMG_FMT, h2_order=sub_dir)
 
         logger.info(f"{html_dir}/index.html has been generated.")

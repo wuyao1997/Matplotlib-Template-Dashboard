@@ -53,31 +53,18 @@ def embedding_resource(html_file: str, out_html_file: str):
         img_base64 = base64.b64encode(img_data).decode("utf-8")
         img["src"] = f"data:image/jpeg;base64,{img_base64}"
 
-    logger.info("Embedding Python files...")
+    logger.info("Embedding ascii files...")
     for button in soup.find_all("button"):
-        if button.get("data-pycode"):
-            pycode_path = os.path.join(
-                os.path.dirname(html_file), button["data-pycode"]
+        if button.get("data-text"):
+            file_path = os.path.join(
+                os.path.dirname(html_file), button["data-text"]
             )
 
-            logger.debug(f"Embedding {pycode_path} into html ...")
+            logger.debug(f"Embedding {file_path} into html ...")
 
-            with open(pycode_path, "r", encoding="utf-8") as f:
-                pycode = f.read()
-            button["data-pycode"] = pycode
-
-    logger.info("Embedding notebook ...")
-    for button in soup.find_all("button"):
-        if button.get("data-notebook"):
-            notebook_path = os.path.join(
-                os.path.dirname(html_file), button["data-notebook"]
-            )
-
-            logger.debug(f"Embedding {notebook_path} into html ...")
-
-            with open(notebook_path, "r", encoding="utf-8") as f:
-                notebook = f.read()
-            button["data-notebook"] = notebook
+            with open(file_path, "r", encoding="utf-8") as f:
+                txt = f.read()
+            button["data-text"] = txt
 
     with open(out_html_file, "w", encoding="utf-8") as f:
         f.write(str(soup))
