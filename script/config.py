@@ -12,6 +12,7 @@ zh_CN = dict(
     lang="zh-CN",
     project_dir="..",
     notebook_dir="notebook",
+    style_dir="style",
     build_dir="build",
     image_format="jpg",
     image_dpi=200,
@@ -27,7 +28,7 @@ zh_CN = dict(
         "其它绘图",
         "三维图像",
         "坐标系布局",
-    ]
+    ],
 )
 
 tasks = [zh_CN]
@@ -38,12 +39,12 @@ def get_logger():
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
 
-    file_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-    file_handler = logging.FileHandler('build.log', encoding='utf-8')
+    file_formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+    file_handler = logging.FileHandler("build.log", encoding="utf-8")
     file_handler.setLevel(logging.DEBUG)
     file_handler.setFormatter(file_formatter)
 
-    console_formatter = logging.Formatter('%(levelname)s - %(message)s')
+    console_formatter = logging.Formatter("%(levelname)s - %(message)s")
     console_handler = logging.StreamHandler()
     console_handler.setLevel(logging.INFO)
     console_handler.setFormatter(console_formatter)

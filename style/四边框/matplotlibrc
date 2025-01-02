@@ -1,0 +1,83 @@
+# 欢迎关注B站账号：matplotlib制图师 https://space.bilibili.com/3546387249629871
+# 微信公众号：matplotlib制图师 https://mp.weixin.qq.com/s/K8EqXk0j5XuHXMVb9Mc4Hw
+# 这是我们的matplotlib站点，https://www.wolai.com/matplotlib/uecbhR3MHhaZkK55za779h
+
+# =========== 图像配置 ===========
+figure.dpi: 150.0               # 绘图时使用的每英寸像素
+figure.figsize: 3, 2.8          # 默认图像宽高
+savefig.dpi: 300                # 保持图片时，每英寸像素
+savefig.transparent: False      # 保持图片时，是否启用透明图层
+
+# =========== 坐标系配置 ===========
+axes.facecolor: FFFFFF        # 坐标系背景颜色
+axes.edgecolor: 000000        # 边框颜色
+axes.linewidth: 1.5             # 边框线宽
+axes.xmargin: 0.05              # X轴范围扩展百分比
+axes.ymargin: 0.05              # Y轴范围扩展百分比
+axes.zmargin: 0.05              # Z轴范围扩展百分比
+# 颜色循环
+axes.prop_cycle: cycler('color', ['3B9EE6', 'fa8072', '76D176', 'd62728', '9467bd', '8c564b', 'e377c2', '7f7f7f', 'bcbd22', '17becf'])
+axes3d.automargin: false
+axes3d.grid: true
+axes3d.xaxis.panecolor: (0.95, 0.95, 0.95, 0.5)
+axes3d.yaxis.panecolor: (0.9, 0.9, 0.9, 0.5)
+axes3d.zaxis.panecolor: (0.925, 0.925, 0.925, 0.5)
+
+# =========== 刻度配置 ===========
+xtick.direction: in             # X轴刻度朝向
+xtick.major.width: 1.2          # X轴刻度宽度
+ytick.direction: in             # Y轴刻度朝向
+ytick.major.width: 1.2          # Y轴刻度宽度
+
+# =========== 网格配置 ===========
+axes.grid: false                        # 是否显示网格线
+grid.alpha: 1.0                         # 网格线透明度
+grid.color: "#b0b0b0"                   # 网格线颜色
+grid.linestyle: -                       # 网格线样式 - 实线，-- 虚线，-. 点划线，: 点线
+grid.linewidth: 0.8                     # 网格线宽度（磅数）
+
+# =========== 字体配置 ===========
+font.family: serif              # 默认字体族（衬线）`serif|sans-serif|monospace`
+# 下面这行优先宋体
+font.serif: simsun, Times New Roman, simsun, DejaVu Serif, serif
+# 如果你合成了新字体（参见https://www.wolai.com/matplotlib/bjA8MaBAjCo5W6Jvc9PZYW），
+# 例如 Song Times: 中文宋体、数字和字母Times New Roman，那么可以使用下面这行
+# font.serif: Song Times, Times New Roman, simsun, DejaVu Serif, serif
+# 无衬线字体列表
+font.sans-serif: DejaVu Sans, Arial, Helvetica, Avant Garde, sans-serif
+# 等宽字体列表
+font.monospace: DejaVu Sans Mono, monospace
+font.size: 10.5                 # 默认字号（五号）
+# mathtext.bf: serif:bold         # 粗细效果
+# mathtext.bfit: serif:italic:bold # 粗斜体
+mathtext.cal: cursive           # 手写体
+mathtext.default: it            # 公式默认字体效果
+mathtext.fallback: cm           # 备用字体
+mathtext.fontset: custom        # 公式默认字体
+mathtext.it: serif:italic       # 公式中斜体效果
+mathtext.rm: serif              # 公式默认字体族，LaTeX中 \rm{} 开启
+mathtext.sf: serif              # 公式符号字体族
+mathtext.tt: monospace          # 打字机字体
+
+# =========== 图例配置 ===========
+legend.columnspacing: 1.2       # 图例列间距
+legend.fancybox: False          # 图例是否采用圆角
+legend.frameon: False           # 图例是否开启遮罩
+legend.handleheight: 0.7        # 图例项高度
+legend.handlelength: 1.5        # 图例项长度
+legend.handletextpad: 0.4       # 图例项与文本间距
+legend.loc: upper right         # 图例位置
+
+# =========== 线条配置 ===========
+lines.linestyle: -
+lines.linewidth: 1.5
+lines.marker: None
+lines.markeredgecolor: auto
+lines.markeredgewidth: 1.0
+lines.markerfacecolor: auto
+lines.markersize: 6.0
+
+# =========== 绘图配置 ===========
+hist.bins: 30                   # 直方图默认统计区间数
+image.aspect: equal             # imshow函数的轴比例
+image.cmap: coolwarm            # 默认颜色映射表

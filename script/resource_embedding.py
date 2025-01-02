@@ -92,7 +92,5 @@ if __name__ == "__main__":
         html_dir = os.path.join(task["project_dir"], task["build_dir"], "html")
         outfilename = f"{html_dir}/{task["outfilename"]}.html"
 
-        embedding_resource(
-            f"{html_dir}/index.html", outfilename
-        )
+        embedding_resource(f"{html_dir}/index.html", outfilename)
         logger.info(f"{outfilename} has been generated.\n")

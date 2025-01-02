@@ -17,7 +17,7 @@ logger = get_logger()
 
 
 def get_notebook_in_dir(directory: str) -> list[str]:
-    """ Recursively obtain the file paths of notebook files
+    """Recursively obtain the file paths of notebook files
     under the specified directory
 
     递归获取指定目录下的 notebook 文件路径
