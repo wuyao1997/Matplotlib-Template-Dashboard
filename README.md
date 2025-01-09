@@ -51,6 +51,8 @@ pip install -r requirements.txt
 
 <a href="https://space.bilibili.com/3546387249629871" target="_blank"><img src="https://www.bilibili.com/favicon.ico" alt="哔哩哔哩" width="auto" height="20pt"></a> [matplotlib制图师](https://space.bilibili.com/3546387249629871)
 
-<a href="https://marketplace.visualstudio.com/items?itemName=litchi.plt-snippet" target="_blank"><img src="https://code.visualstudio.com/favicon.ico" alt="B站logo" width="auto" height="20pt"></a> 开发的 VS Code 插件 [Matplotlib Pilot (Chinese)](https://marketplace.visualstudio.com/items?itemName=litchi.plt-snippet)
+<a href="https://marketplace.visualstudio.com/items?itemName=litchi.plt-snippet" target="_blank"><img src="https://code.visualstudio.com/favicon.ico" alt="VS Code logo" width="auto" height="20pt"></a> 开发的 VS Code 插件 [Matplotlib Pilot (Chinese)](https://marketplace.visualstudio.com/items?itemName=litchi.plt-snippet)
+
+<a href="https://mp.weixin.qq.com/s/K8EqXk0j5XuHXMVb9Mc4Hw" target="_blank"><img src="https://open.weixin.qq.com/zh_CN/htmledition/res/assets/res-design-download/icon48_appwx_logo.png" alt="wechat logo" width="auto" height="20pt"></a> 微信公众号 [matplotlib 制图师](https://mp.weixin.qq.com/s/K8EqXk0j5XuHXMVb9Mc4Hw)
 
 学习笔记 [matplotlib 在线手册](https://www.wolai.com/matplotlib/uecbhR3MHhaZkK55za779h) 

@@ -16,8 +16,9 @@ zh_CN = dict(
     style_dir="style",
     build_dir="build",
     image_format="jpg",
-    image_dpi=200,
+    image_dpi=144,
     outfilename="matplotlib绘图模板",
+    vscode=False,
     sub_dir=[  # 手动指定子目录的顺序
         "折线图",
         "条形图",
@@ -57,6 +58,10 @@ def get_task_params(tasks):
         param["footer_path"] = join(lang_path, "html", "footer.html")
         param["css_path"] = join(lang_path, "css", "style.css")
         param["js_path"] = join(lang_path, "js", "script.js")
+        if param["vscode"]:
+            param["css_path"] = join(lang_path, "css", "vscode.css")
+            param["js_path"] = join(lang_path, "js", "vscode.js")
+            param["outfilename"] = "template.vscode"
 
         task_params.append(param)
 

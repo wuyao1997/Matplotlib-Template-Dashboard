@@ -1,13 +1,18 @@
 body {
-    background-color: #1e1e1e;
+    padding: 0 var(--container-paddding);
+    color: var(--vscode-foreground);
+    font-size: var(--vscode-font-size);
+    font-weight: var(--vscode-font-weight);
+    font-family: var(--vscode-font-family);
+    background-color: var(--vscode-editor-background);
 }
 
 h2 {
     text-align: center;
     width: 100vw;
     margin: 0;
-    background-color: #0e639c;
-    color: white;
+    background-color: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
 }
 
 .container {
@@ -35,19 +40,32 @@ h2 {
 
 button {
     border: none;
+    margin-top: 0px;
     margin-bottom: 0px;
     width: 100%;
     text-align: center;
     outline: 1px solid transparent;
     outline-offset: 2px !important;
-    color: white;
-    background: #0e639c;
-    font-size: 16px;
+    color: var(--vscode-button-foreground);
+    background: var(--vscode-button-background);
 }
 
 button:hover {
     cursor: pointer;
-    background: #1a8dda;
+    background: var(--vscode-button-hoverBackground);
+}
+
+button:focus {
+    outline-color: var(--vscode-focusBorder);
+}
+
+button.secondary {
+    color: var(--vscode-button-secondaryForeground);
+    background: var(--vscode-button-secondaryBackground);
+}
+
+button.secondary:hover {
+    background: var(--vscode-button-secondaryHoverBackground);
 }
 
 .copy-button {
@@ -59,8 +77,7 @@ button:hover {
 }
 
 footer {
-    background-color: #333;
-    color: #fff;
+    background-color: var(--vscode-editor-background);
     padding: 20px 0;
 }
 
@@ -86,7 +103,7 @@ footer {
 }
 
 .social-icons img {
-    width: auto;
+    width: 24px;
     height: 24px;
 }
 
